@@ -25,7 +25,16 @@ All the dependencies are in each dir in package.json file
 
 ## 2 - Front-End
 
-...
+### Authentication Guard System
+The AuthGuard protect the pages that need the user sign in, redirecting to login page.
+
+To verify the user state was implemented a context and to store the user data I use React-Redux.
+
+The main folders of "AuthGuard System" are: contexts, hooks, store and utils.
+
+### Pages
+
+* Register page;
 
 ## 3 - Back-End
 

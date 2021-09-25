@@ -7,17 +7,19 @@ import NavMotion from "@src/layout/NavMotion";
 import Loadable from "@src/components/Loadable";
 
 const UserRegister = Loadable(lazy(() => import("@src/pages/register")));
+const Login = Loadable(lazy(() => import("@src/pages/login")));
 
 const LoginRoutes = () => {
   const location = useLocation();
 
   return (
-    <Route path={["/register"]}>
+    <Route path={["/register", "/login"]}>
       <MinimalLayout>
         <Switch location={location} key={location.pathname}>
           <NavMotion>
             <GuestGuard>
               <Route path="/register" component={UserRegister} />
+              <Route path="/login" component={Login} />
             </GuestGuard>
           </NavMotion>
         </Switch>
