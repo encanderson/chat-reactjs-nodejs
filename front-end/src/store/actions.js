@@ -12,3 +12,10 @@ export const SET_OUTLINED_FILLED = "@customization/SET_OUTLINED_FILLED";
 
 // action - snackbar
 export const SNACKBAR_OPEN = "@snackbar/SNACKBAR_OPEN";
+
+// action - account reducer
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
+export const ACCOUNT_INITIALIZE = "ACCOUNT_INITIALIZE";
+export const EDIT_USER = "EDIT_USER";
+export const SET_STATUS = "SET_STATUS";

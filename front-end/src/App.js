@@ -2,15 +2,13 @@
 import { useSelector } from "react-redux";
 
 import { ThemeProvider } from "@material-ui/core/styles";
-import {
-  CssBaseline,
-  StyledEngineProvider,
-  Typography,
-} from "@material-ui/core";
+import { CssBaseline, StyledEngineProvider } from "@material-ui/core";
 
 import theme from "@src/themes";
 import NavigationScroll from "@src/layout/NavigationScroll";
 import Snackbar from "@src/components/extended/Snackbar";
+
+import Routes from "@src/routes";
 
 import { JWTProvider } from "@src/contexts/JWTContext";
 
@@ -23,7 +21,7 @@ const App = () => {
         <CssBaseline>
           <NavigationScroll>
             <JWTProvider>
-              <Typography>Hello world!</Typography>
+              <Routes />
               <Snackbar />
             </JWTProvider>
           </NavigationScroll>

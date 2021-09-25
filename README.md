@@ -1,4 +1,6 @@
-# Web chat with React Js and Node.js
+# Web chat with React Js, Node.js and Docker
+
+<br>
 
 ## 1 - Steps
 
@@ -8,9 +10,11 @@ There are three steps to build this project, like we can see in this image below
 <br>
 
 <div align="center">
-    <img src="./static/mind-map-chat-app.jpeg"
-    alt="chat-react-node.js"
-    style="float: center; margin-right: 10px; align="right" " />
+    <kbd>
+        <img src="./static/mind-map-chat-app.jpeg"
+        alt="chat-react-node.js"
+        style="float: center; margin-right: 10px; align="center" />
+    </kbd>
 </div>
 
 ##
@@ -30,6 +34,6 @@ All the dependencies are in each dir in package.json file
 ## 4 - Docker-Container
 
 ...
-## 5 - How to install and run the project?
+## 5 - How to install and run this project?
 
 ...
