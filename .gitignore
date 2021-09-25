@@ -1,0 +1,8 @@
+.env
+node_modules/
+dist/
+.vscode/
+public/
+yarn.lock
+test.ts
+geo.js
