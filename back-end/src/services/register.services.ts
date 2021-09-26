@@ -3,6 +3,10 @@ import {Users} from "@src/models/users";
 import {encryptPassword} from "@src/utils/bcrypt";
 
 interface User {
+  consents: {
+    privacy: boolean,
+    terms: boolean,
+  }
     email: string;
     name: string;
     password: string;
@@ -28,6 +32,7 @@ export const addUser = async (user: User): Promise<GenericResponse> => {
   }
   await Users.create({
     _id: hashFunction(user.username),
+    consents: user.consents,
     email: user.email,
     name: user.name,
     username: user.username,

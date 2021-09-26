@@ -8,9 +8,9 @@
 2. [Front-End](#Front-End)
 3. [Back-End](#Back-End)
 4. [Docker-Container](#Docker-Container)
-5. [How to install and run this project?](##how-to-install-and-run-this-project)
+5. [How to install and run this project?](##how-to-install-and-run-this-project-?)
 
-### 1 - Steps
+### Steps
 
 There are three steps to build this project, like we can see in this image below. How we can see the core of this project are: React Js, Node.js and Docker Container.
 

@@ -6,7 +6,7 @@ export const userRegister = async (data) => {
   try {
     const response = await axios({
       method: "POST",
-      baseURL: createUrlApi(`/auth/user-register`),
+      baseURL: createUrlApi(`/register`),
       headers: {
         Accept: "application/json;",
         "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import { Link as RouterLink, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,10 +25,10 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 
 // project imports
-// import useAuth from "@src/hooks/useAuth";
 import useScriptRef from "@src/hooks/useScriptRef";
 import { strengthColor, strengthIndicator } from "@src/utils/password-strength";
-// import { SNACKBAR_OPEN } from "@src/store/actions";
+import { userRegister } from "@src/api/auth";
+import { SNACKBAR_OPEN } from "@src/store/actions";
 
 // assets
 import Visibility from "@material-ui/icons/Visibility";
@@ -47,13 +47,12 @@ const useStyles = makeStyles((theme) => ({
 //===========================|| JWT - REGISTER ||===========================//
 
 const JWTRegister = ({ ...others }) => {
-  // const dispatch = useDispatch();
-
-  // const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const classes = useStyles();
   const scriptedRef = useScriptRef();
-  //   const customization = useSelector((state) => state.customization);
+
   const [showPassword, setShowPassword] = React.useState(false);
   const [checkedPrivacy, setCheckedPrivacy] = React.useState(false);
   const [checkdTerms, setCheckedTerms] = React.useState(false);
@@ -71,44 +70,44 @@ const JWTRegister = ({ ...others }) => {
       firstName: values.firstName,
       lastName: values.lastName,
       password: values.password,
+      username: values.username,
     };
-    console.log(data);
-    // if (checkdTerms && checkedPrivacy) {
-    //   // const response = await registerUser(data);
-    //   if (response.status) {
-    //     dispatch({
-    //       type: SNACKBAR_OPEN,
-    //       open: true,
-    //       message: response.message,
-    //       variant: "alert",
-    //       anchorOrigin: { vertical: "top", horizontal: "center" },
-    //       alertSeverity: "success",
-    //       close: false,
-    //     });
-    //     history.push("/login");
-    //   } else {
-    //     dispatch({
-    //       type: SNACKBAR_OPEN,
-    //       open: true,
-    //       message: response.message,
-    //       variant: "alert",
-    //       anchorOrigin: { vertical: "top", horizontal: "center" },
-    //       alertSeverity: "warning",
-    //       close: false,
-    //     });
-    //   }
-    // } else {
-    //   dispatch({
-    //     type: SNACKBAR_OPEN,
-    //     open: true,
-    //     message:
-    //       "É preciso observar nossa Polítca de Privacidade e Termos de Uso",
-    //     variant: "alert",
-    //     anchorOrigin: { vertical: "top", horizontal: "center" },
-    //     alertSeverity: "warning",
-    //     close: false,
-    //   });
-    // }
+    if (checkdTerms && checkedPrivacy) {
+      const response = await userRegister(data);
+      if (response.status) {
+        dispatch({
+          type: SNACKBAR_OPEN,
+          open: true,
+          message: response.message,
+          variant: "alert",
+          anchorOrigin: { vertical: "top", horizontal: "center" },
+          alertSeverity: "success",
+          close: false,
+        });
+        setTimeout(() => history.push("/login"), 0);
+      } else {
+        dispatch({
+          type: SNACKBAR_OPEN,
+          open: true,
+          message: response.message,
+          variant: "alert",
+          anchorOrigin: { vertical: "top", horizontal: "center" },
+          alertSeverity: "warning",
+          close: false,
+        });
+      }
+    } else {
+      dispatch({
+        type: SNACKBAR_OPEN,
+        open: true,
+        message:
+          "É preciso observar nossa Polítca de Privacidade e Termos de Uso",
+        variant: "alert",
+        anchorOrigin: { vertical: "top", horizontal: "center" },
+        alertSeverity: "warning",
+        close: false,
+      });
+    }
   };
 
   const handleClickShowPassword = () => {
@@ -155,6 +154,7 @@ const JWTRegister = ({ ...others }) => {
           firstName: "",
           lastName: "",
           password: "",
+          username: "",
           submit: null,
         }}
         validationSchema={Yup.object().shape({
@@ -162,6 +162,7 @@ const JWTRegister = ({ ...others }) => {
             .email("O email deve ser válido")
             .max(255)
             .required("Email é obrigatório"),
+          username: Yup.string().required("Escolha seu nome de usuário."),
           firstName: Yup.string()
             .max(20)
             .required("Digite o seu primeiro nome"),
@@ -294,7 +295,38 @@ const JWTRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
-
+            <FormControl
+              fullWidth
+              error={Boolean(touched.email && errors.email)}
+              className={classes.loginInput}
+              variant="outlined"
+            >
+              <InputLabel htmlFor="outlined-adornment-email-register">
+                Username
+              </InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-username-register"
+                type="username"
+                value={values.username}
+                name="username"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                inputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                  },
+                }}
+              />
+              {touched.username && errors.username && (
+                <FormHelperText
+                  error
+                  id="standard-weight-helper-text--username"
+                >
+                  {" "}
+                  {errors.username}{" "}
+                </FormHelperText>
+              )}
+            </FormControl>
             <FormControl
               fullWidth
               error={Boolean(touched.password && errors.password)}
@@ -343,7 +375,6 @@ const JWTRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
-
             {strength !== 0 && (
               <FormControl fullWidth>
                 <Box mb={2}>
@@ -447,22 +478,6 @@ const JWTRegister = ({ ...others }) => {
           </form>
         )}
       </Formik>
-      <Grid>
-        <Box mt={2}>
-          <Button
-            disableElevation
-            fullWidth
-            component={RouterLink}
-            to="/enviar-email"
-            size="large"
-            type="button"
-            variant="contained"
-            color="primary"
-          >
-            Solicitar Novo Convite
-          </Button>
-        </Box>
-      </Grid>
     </React.Fragment>
   );
 };

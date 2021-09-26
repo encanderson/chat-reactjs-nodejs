@@ -12,7 +12,7 @@ const config = {
     timeout: "1 days",
   },
   home: "http://localhost:2000/login",
-  baseUrl: "http://localhost:3000",
+  baseUrl: "http://localhost:4000",
 };
 
 export default config;
