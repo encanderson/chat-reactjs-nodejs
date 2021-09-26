@@ -8,7 +8,7 @@
 2. [Front-End](#Front-End)
 3. [Back-End](#Back-End)
 4. [Docker-Container](#Docker-Container)
-5. [How to install and run this project?](#How-to-install-and-run-this-project?)
+5. [How to install and run this project?](##how-to-install-and-run-this-project)
 
 ### 1 - Steps
 
@@ -46,6 +46,25 @@ The main folders of "AuthGuard System" are: contexts, hooks, store and utils.
 
 ### Back-End
 
+Behind the scene activities, we need a database to keep our data safe and available. The endpoints (routes) to serve the requests from the front-end are distributed in:
+
+* Routes of register and password recovery:
+    - user register;
+    - reset password;
+    - verify code (two factors authentications).
+* Login routes:
+    - Verify password;
+    - Verify code.
+* Contacts routes:
+    - search users;
+    - add contact;
+    - contacts list.
+* Chat routes:
+    - chat-private-room;
+    - chats list.
+* Socket.io events:
+    - send message;
+    - send notification.
 ...
 
 ### Docker-Container

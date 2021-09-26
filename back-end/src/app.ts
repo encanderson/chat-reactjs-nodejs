@@ -12,4 +12,6 @@ app.use(
   })
 );
 
+require("@src/routes/register.routes")(app);
+
 export default app;
