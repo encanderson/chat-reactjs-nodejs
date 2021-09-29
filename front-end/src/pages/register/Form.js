@@ -237,7 +237,7 @@ const JWTRegister = ({ ...others }) => {
                   variant="outlined"
                 >
                   <InputLabel htmlFor="outlined-adornment-lastName-register">
-                    Primeiro Nome
+                    Último Nome
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-lastName-register"

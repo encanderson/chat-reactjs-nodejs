@@ -7,7 +7,7 @@ import NavMotion from "@src/layout/NavMotion";
 import Loadable from "@src/components/Loadable";
 
 const UserRegister = Loadable(lazy(() => import("@src/pages/register")));
-const Login = Loadable(lazy(() => import("@src/pages/login")));
+const Login = Loadable(lazy(() => import("@src/pages/auth/login")));
 
 const LoginRoutes = () => {
   const location = useLocation();
