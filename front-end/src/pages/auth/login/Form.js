@@ -67,9 +67,12 @@ const LoginForm = (props, { ...others }) => {
     event.preventDefault();
   };
 
-  const handleSignIn = async (email, password) => {
+  const handleSignIn = async (username, password) => {
     setInitialized(true);
-    const response = await userSignIn({ email: email, password: password });
+    const response = await userSignIn({
+      username: username,
+      password: password,
+    });
     if (response.status) {
       orisistemSingIn(response);
       history.push("/redirect");
@@ -95,17 +98,17 @@ const LoginForm = (props, { ...others }) => {
   return (
     <Formik
       initialValues={{
-        email: "",
+        username: "",
         password: "",
         submit: null,
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().required("O email é obrigatório!"),
+        username: Yup.string().required("O username é obrigatório!"),
         password: Yup.string().max(255).required("Digite sua senha!"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await handleSignIn(values.email, values.password);
+          await handleSignIn(values.username, values.password);
 
           if (scriptedRef.current) {
             setStatus({ success: true });
@@ -133,23 +136,28 @@ const LoginForm = (props, { ...others }) => {
         <form noValidate onSubmit={handleSubmit} {...others}>
           <FormControl
             fullWidth
-            error={Boolean(touched.email && errors.email)}
+            error={Boolean(touched.username && errors.username)}
             className={classes.loginInput}
             variant="outlined"
           >
-            <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
+            <InputLabel htmlFor="outlined-adornment-username">
+              Nome do usuário
+            </InputLabel>
             <OutlinedInput
-              id="outlined-adornment-email"
+              id="outlined-adornment-username"
               fullWidth
-              value={values.email}
+              value={values.username}
               onBlur={handleBlur}
               onChange={handleChange}
-              name="email"
+              name="username"
             />
-            {touched.email && errors.email && (
-              <FormHelperText error id="standard-weight-helper-email--register">
+            {touched.username && errors.username && (
+              <FormHelperText
+                error
+                id="standard-weight-helper-username--register"
+              >
                 {" "}
-                {errors.email}{" "}
+                {errors.username}{" "}
               </FormHelperText>
             )}
           </FormControl>
