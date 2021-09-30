@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,12 +21,9 @@ import {
 // third party
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useDispatch } from "react-redux";
 
 // project imports
 import useScriptRef from "@src/hooks/useScriptRef";
-import { userSignIn } from "@src/api/auth";
-import { SNACKBAR_OPEN } from "@src/store/actions";
 import Loader from "@src/components/Loader";
 import useAuth from "@src/hooks/useAuth";
 
@@ -48,16 +45,10 @@ const LoginForm = (props, { ...others }) => {
   const scriptedRef = useScriptRef();
 
   const [checked, setChecked] = React.useState(false);
-
   const [showPassword, setShowPassword] = React.useState(false);
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
-
   const [isInitialized, setInitialized] = React.useState(false);
 
-  const { orisistemSingIn } = useAuth();
+  const { login } = useAuth();
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -69,26 +60,7 @@ const LoginForm = (props, { ...others }) => {
 
   const handleSignIn = async (username, password) => {
     setInitialized(true);
-    const response = await userSignIn({
-      username: username,
-      password: password,
-    });
-    if (response.status) {
-      orisistemSingIn(response);
-      history.push("/redirect");
-    } else {
-      dispatch({
-        type: SNACKBAR_OPEN,
-        open: true,
-        message: response.message,
-        variant: "alert",
-        anchorOrigin: { vertical: "top", horizontal: "center" },
-        alertSeverity: "error",
-        close: false,
-      });
-      setInitialized(false);
-      history.push("/login");
-    }
+    await login(username, password);
   };
 
   if (isInitialized) {

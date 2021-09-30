@@ -67,8 +67,7 @@ const JWTRegister = ({ ...others }) => {
         terms: checkdTerms,
       },
       email: values.email,
-      firstName: values.firstName,
-      lastName: values.lastName,
+      name: values.firstName + " " + values.lastName,
       password: values.password,
       username: values.username,
     };

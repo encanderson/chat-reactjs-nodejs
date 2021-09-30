@@ -12,7 +12,7 @@ export const signIn = async (req: Request, res: Response): Promise<void> => {
   } catch(err){
     res.status(500).send({
       status: false,
-      message: "We get a trouble in our server, please, try"
+      message: "We get a trouble in our server, please, try again."
     });
   }
 };

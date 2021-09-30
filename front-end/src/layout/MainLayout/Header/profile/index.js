@@ -90,17 +90,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "16px",
     marginTop: "16px",
   },
-  searchControl: {
-    width: "100%",
-    paddingRight: "8px",
-    paddingLeft: "16px",
-    marginBottom: "16px",
-    marginTop: "16px",
-  },
-  startAdornment: {
-    fontSize: "1rem",
-    color: theme.palette.grey[500],
-  },
   flex: {
     display: "flex",
   },
@@ -112,13 +101,6 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     maxHeight: "calc(100vh - 250px)",
     overflowX: "hidden",
-  },
-  badgeWarning: {
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? theme.palette.dark.dark
-        : theme.palette.warning.dark,
-    color: "#fff",
   },
 }));
 
@@ -239,7 +221,7 @@ const ProfileSection = () => {
                           variant="h4"
                           className={classes.name}
                         >
-                          {user?.userProfile.name}
+                          {user?.name}
                         </Typography>
                       </Grid>
                       <Grid item>

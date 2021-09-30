@@ -62,37 +62,33 @@ export const JWTProvider = ({ children }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.accounts);
 
-  const login = async (code, token) => {
-    const userId = verifyToken(token);
-    if (userId) {
-      const decoded = jwtDecode(token);
-      const _id = decoded._id;
-      const response = await userSignIn({
-        userId: _id,
-        code: code,
+  const login = async (username, password) => {
+    const response = await userSignIn({
+      username: username,
+      password: password,
+    });
+    if (response.status) {
+      const { serviceToken, user } = response;
+      sessionStorage.setItem("serviceToken", serviceToken);
+      setSession(serviceToken);
+      dispatch({
+        type: LOGIN,
+        payload: {
+          user: user,
+        },
       });
-      if (response.status) {
-        const { serviceToken, user } = response;
-        sessionStorage.setItem("serviceToken", serviceToken);
-        setSession(serviceToken);
-        dispatch({
-          type: LOGIN,
-          payload: {
-            user: user,
-          },
-        });
-      } else {
-        dispatch({
-          type: SNACKBAR_OPEN,
-          open: true,
-          message: response.message,
-          variant: "alert",
-          anchorOrigin: { vertical: "top", horizontal: "center" },
-          alertSeverity: "error",
-          close: false,
-        });
-        history.push("/");
-      }
+      history.push("/chat");
+    } else {
+      dispatch({
+        type: SNACKBAR_OPEN,
+        open: true,
+        message: response.message,
+        variant: "alert",
+        anchorOrigin: { vertical: "top", horizontal: "center" },
+        alertSeverity: "error",
+        close: false,
+      });
+      history.push("/");
     }
   };
 
@@ -107,15 +103,14 @@ export const JWTProvider = ({ children }) => {
         const serviceToken = window.localStorage.getItem("serviceToken");
         if (serviceToken && verifyToken(serviceToken)) {
           setSession(serviceToken);
-          const response = await axios.get(createUrlApi("/auth/user"));
-          const user = response.data.user;
+          const response = await axios.get(createUrlApi("/user/data"));
+          const user = response.data.data;
           dispatch({
             type: ACCOUNT_INITIALIZE,
             payload: {
               isLoggedIn: true,
               user: user,
               // socket: socket,
-              status: user.status,
             },
           });
         } else {

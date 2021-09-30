@@ -14,5 +14,6 @@ app.use(
 
 require("@src/routes/register.routes")(app);
 require("@src/routes/auth.routes")(app);
+require("@src/routes/user.routes")(app);
 
 export default app;

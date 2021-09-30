@@ -7,6 +7,7 @@ import { CssBaseline, StyledEngineProvider } from "@material-ui/core";
 import theme from "@src/themes";
 import NavigationScroll from "@src/layout/NavigationScroll";
 import Snackbar from "@src/components/extended/Snackbar";
+import Locales from "@src/components/Locales";
 
 import Routes from "@src/routes";
 
@@ -19,12 +20,14 @@ const App = () => {
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme(customization)}>
         <CssBaseline>
-          <NavigationScroll>
-            <JWTProvider>
-              <Routes />
-              <Snackbar />
-            </JWTProvider>
-          </NavigationScroll>
+          <Locales>
+            <NavigationScroll>
+              <JWTProvider>
+                <Routes />
+                <Snackbar />
+              </JWTProvider>
+            </NavigationScroll>
+          </Locales>
         </CssBaseline>
       </ThemeProvider>
     </StyledEngineProvider>

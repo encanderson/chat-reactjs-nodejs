@@ -8,7 +8,7 @@
 2. [Front-End](#Front-End)
 3. [Back-End](#Back-End)
 4. [Docker-Container](#Docker-Container)
-5. [How to install and run this project?](#How-to-install-and-run-this-project?)
+5. [Install and run](#Install-and-run)
 
 ### Steps
 
@@ -71,6 +71,6 @@ Behind the scene activities, we need a database to keep our data safe and availa
 ### Docker-Container
 
 ...
-### How to install and run this project?
+### Install and run
 
 ...
