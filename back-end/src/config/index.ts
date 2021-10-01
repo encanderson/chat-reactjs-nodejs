@@ -6,5 +6,7 @@ const dotenv = require("dotenv").config({
 export const config = {
   mongoUrl: dotenv.MONGO_DB_URL,
   secretKey: dotenv.SECRET_KEY,
+  emailUser: dotenv.EMAIL_USER,
+  emailPass: dotenv.EMAIL_PASS,
+  emailServer: dotenv.MAIL_SERVER
 };
-  
