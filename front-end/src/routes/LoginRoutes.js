@@ -8,18 +8,22 @@ import Loadable from "@src/components/Loadable";
 
 const UserRegister = Loadable(lazy(() => import("@src/pages/register")));
 const Login = Loadable(lazy(() => import("@src/pages/auth/login")));
+const ForgotPassword = Loadable(
+  lazy(() => import("@src/pages/auth/recover-password"))
+);
 
 const LoginRoutes = () => {
   const location = useLocation();
 
   return (
-    <Route path={["/register", "/login"]}>
+    <Route path={["/register", "/login", "/recuperar-senha"]}>
       <MinimalLayout>
         <Switch location={location} key={location.pathname}>
           <NavMotion>
             <GuestGuard>
               <Route path="/register" component={UserRegister} />
               <Route path="/login" component={Login} />
+              <Route path="/recuperar-senha" component={ForgotPassword} />
             </GuestGuard>
           </NavMotion>
         </Switch>

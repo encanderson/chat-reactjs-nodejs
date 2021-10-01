@@ -35,3 +35,20 @@ export const userSignIn = async (data) => {
     return { status: null };
   }
 };
+
+export const sendEmailRecover = async (data) => {
+  try {
+    const response = await axios({
+      method: "POST",
+      baseURL: createUrlApi(`/auth/login`),
+      headers: {
+        Accept: "application/json;",
+        "Content-Type": "application/json",
+      },
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
+    return { status: null };
+  }
+};
