@@ -9,11 +9,6 @@ import { Divider, Grid, Typography, useMediaQuery } from "@material-ui/core";
 import AuthWrapper1 from "@src/pages/auth/AuthWrapper1";
 import AuthCardWrapper from "@src/pages/auth/AuthCardWrapper";
 import JWTForgotPassword from "./Form";
-import AuthFooter from "@src/components/cards/AuthFooter";
-
-// assets
-// import logo from "@src/assets/images/logo.svg";
-// import logoDark from "@src/assets/images/logo-dark.svg";
 
 //============================|| AUTH3 - FORGOT PASSWORD ||============================//
 
@@ -120,7 +115,6 @@ const ForgotPassword = () => {
                 </Grid>
               </AuthCardWrapper>
             </Grid>
-            <AuthFooter />
           </Grid>
         </Grid>
       </Grid>
