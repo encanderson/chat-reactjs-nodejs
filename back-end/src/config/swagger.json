@@ -48,6 +48,37 @@
           }
         }
       }
+    },
+    "/auth/recovery-password": {
+      "post": {
+        "tags":["Users"],
+        "summary": "Password Recovery",
+        "description": "Send an email with verify code",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Email"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "User not found!"
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+                "applications/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/Generic Response"
+                    }
+                }
+              }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -90,6 +121,14 @@
             "message": {
                 "type": "string"
             }
+        }
+      },
+      "Email": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
         }
       }
     }

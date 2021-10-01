@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 
 // material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,12 +14,10 @@ import {
 // third party
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useDispatch } from "react-redux";
 
 // project imports
 import useScriptRef from "@src/hooks/useScriptRef";
-import { SNACKBAR_OPEN } from "@src/store/actions";
-import { sendEmailRecover } from "@src/api/auth";
+import useAuth from "@src/hooks/useAuth";
 
 // style constant
 const useStyles = makeStyles((theme) => ({
@@ -35,25 +32,10 @@ const ForgotPassword = ({ ...others }) => {
   const classes = useStyles();
   const scriptedRef = useScriptRef();
 
-  const dispatch = useDispatch();
+  const { sendCode } = useAuth();
 
-  const history = useHistory();
-
-  async function handlerSend(email) {
-    const resp = await sendEmailRecover(email);
-    if (resp.status) {
-      history.push("/verificar-codigo");
-    } else {
-      dispatch({
-        type: SNACKBAR_OPEN,
-        open: true,
-        message: "Verifique se seus dados estão corretos.",
-        variant: "alert",
-        anchorOrigin: { vertical: "top", horizontal: "center" },
-        alertSeverity: "error",
-        close: false,
-      });
-    }
+  async function handleSend(email) {
+    await sendCode(email);
   }
 
   return (
@@ -63,11 +45,11 @@ const ForgotPassword = ({ ...others }) => {
         submit: null,
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string().min(14).max(14).required("Digite seu email."),
+        email: Yup.string().required("Digite seu email."),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await handlerSend(values.email);
+          await handleSend(values.email);
 
           if (scriptedRef.current) {
             setStatus({ success: true });

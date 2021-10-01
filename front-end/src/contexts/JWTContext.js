@@ -19,7 +19,7 @@ import {
 // project imports
 import axios from "@src/utils/axios";
 import Loader from "@src/components/Loader";
-import { userSignIn } from "@src/api/auth";
+import { userSignIn, changePassword, sendEmailRecover } from "@src/api/auth";
 import { createUrlApi } from "@src/api/baseUrl";
 // import config from "@src/config";
 
@@ -54,6 +54,10 @@ const JWTContext = createContext({
   ...initialState,
   login: () => Promise.resolve(),
   logout: () => {},
+  sendCode: () => Promise.resolve(),
+  email: String,
+  verify: Boolean,
+  resetPassword: Promise.resolve(),
 });
 
 export const JWTProvider = ({ children }) => {
@@ -61,6 +65,27 @@ export const JWTProvider = ({ children }) => {
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.accounts);
+
+  const [email, setEmail] = React.useState("");
+  const [verify, setVerify] = React.useState(false);
+  const sendCode = async (user) => {
+    const resp = await sendEmailRecover(user);
+    if (resp.status) {
+      setEmail(user);
+      setVerify(true);
+      history.push("/verificar-codigo");
+    } else {
+      dispatch({
+        type: SNACKBAR_OPEN,
+        open: true,
+        message: "Por favor, verifique os seus dados.",
+        variant: "alert",
+        anchorOrigin: { vertical: "top", horizontal: "center" },
+        alertSeverity: "error",
+        close: false,
+      });
+    }
+  };
 
   const login = async (username, password) => {
     const response = await userSignIn({
@@ -95,6 +120,26 @@ export const JWTProvider = ({ children }) => {
   const logout = async () => {
     setTimeout(() => dispatch({ type: LOGOUT }), 10);
     setSession(null);
+  };
+
+  const resetPassword = async (password, userToken) => {
+    const response = await changePassword({
+      password: password,
+      userToken: userToken,
+    });
+    if (response.status) {
+      history.push("/login");
+    } else {
+      dispatch({
+        type: SNACKBAR_OPEN,
+        open: true,
+        message: response.message,
+        variant: "alert",
+        anchorOrigin: { vertical: "top", horizontal: "center" },
+        alertSeverity: "warning",
+        close: false,
+      });
+    }
   };
 
   useEffect(() => {
@@ -150,6 +195,10 @@ export const JWTProvider = ({ children }) => {
         ...state,
         login,
         logout,
+        sendCode,
+        email,
+        verify,
+        resetPassword,
       }}
     >
       {children}

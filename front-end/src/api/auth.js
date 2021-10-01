@@ -36,11 +36,30 @@ export const userSignIn = async (data) => {
   }
 };
 
-export const sendEmailRecover = async (data) => {
+export const sendEmailRecover = async (email) => {
   try {
     const response = await axios({
       method: "POST",
-      baseURL: createUrlApi(`/auth/login`),
+      baseURL: createUrlApi(`/auth/recovery-password`),
+      headers: {
+        Accept: "application/json;",
+        "Content-Type": "application/json",
+      },
+      data: {
+        email: email,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    return { status: null };
+  }
+};
+
+export async function verifyCode(data) {
+  try {
+    const response = await axios({
+      method: "POST",
+      baseURL: createUrlApi(`/auth/verify-code`),
       headers: {
         Accept: "application/json;",
         "Content-Type": "application/json",
@@ -51,4 +70,21 @@ export const sendEmailRecover = async (data) => {
   } catch (err) {
     return { status: null };
   }
-};
+}
+
+export async function changePassword(data) {
+  try {
+    const response = await axios({
+      method: "POST",
+      baseURL: createUrlApi(`/auth/reset-password`),
+      headers: {
+        Accept: "application/json;",
+        "Content-Type": "application/json",
+      },
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
+    return { status: null };
+  }
+}
