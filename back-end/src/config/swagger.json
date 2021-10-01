@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Chat - Api",
+    "version": "1.0.0",
+    "contact": {
+      "email": "engc.anderson@icloud.com",
+      "url": "https://github.com/encanderson"
+    },
+    "description": "Api to server chat application"
+  },
+  "servers": [{ "url": "http://localhost:4000" }],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User register",
+        "description": "Endpoint to register an user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "User alredy exist.",
+            "content": {
+              "applications/json": {
+                  "schema": {
+                      "$ref": "#/components/schemas/Generic Response"
+                  }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+                "applications/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/Generic Response"
+                    }
+                }
+              }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "consents": {
+            "properties": {
+              "privacy": {
+                "type": "boolean"
+              },
+              "terms": {
+                "type": "boolean"
+              }
+            },
+            "required": ["privacy", "terms"]
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "required": ["consents", "email", "name", "username", "password"]
+      },
+      "Generic Response": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "boolean"
+            },
+            "message": {
+                "type": "string"
+            }
+        }
+      }
+    }
+  }
+}

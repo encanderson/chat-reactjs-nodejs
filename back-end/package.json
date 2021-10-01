@@ -61,6 +61,7 @@
     "mongoose": "^5.12.12",
     "nodemailer": "^6.6.5",
     "path": "^0.12.7",
+    "redoc-express": "^1.0.0",
     "socket.io": "4.0.0"
   }
 }

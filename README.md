@@ -44,7 +44,7 @@ The main folders of "AuthGuard System" are: contexts, hooks, store and utils.
 
 * Register page;
 * Login page;
-* Rcovery (password) email page;
+* Recovery (password) email page;
 
 ### Back-End
 

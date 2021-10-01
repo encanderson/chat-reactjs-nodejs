@@ -7,7 +7,11 @@ export const userRegister = async (req: Request, res: Response): Promise<void> =
     const user = req.body;
 
     const resp = await addUser(user);
-    res.status(200).send(resp);
+    if (resp.status){
+      res.status(200).send(resp);
+    } else {
+      res.status(400).send(resp);
+    }
   } catch (err){
     res.status(500).send({
       status: false,
