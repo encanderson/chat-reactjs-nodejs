@@ -13,7 +13,7 @@
   "paths": {
     "/register": {
       "post": {
-        "tags": ["Users"],
+        "tags": ["User"],
         "summary": "User register",
         "description": "Endpoint to register an user",
         "requestBody": {
@@ -30,28 +30,28 @@
             "description": "User alredy exist.",
             "content": {
               "applications/json": {
-                  "schema": {
-                      "$ref": "#/components/schemas/Generic Response"
-                  }
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
+                }
               }
             }
           },
           "200": {
             "description": "Successful Response",
             "content": {
-                "applications/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/Generic Response"
-                    }
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
                 }
               }
+            }
           }
         }
       }
     },
     "/auth/recovery-password": {
       "post": {
-        "tags":["Users"],
+        "tags": ["Authentication"],
         "summary": "Password Recovery",
         "description": "Send an email with verify code",
         "requestBody": {
@@ -65,17 +65,168 @@
         },
         "responses": {
           "400": {
-            "description": "User not found!"
+            "description": "User not found!",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
+                }
+              }
+            }
           },
           "200": {
             "description": "Successful Response",
             "content": {
-                "applications/json": {
-                    "schema": {
-                        "$ref": "#/components/schemas/Generic Response"
-                    }
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/auth/verify-code": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Verify Code",
+        "description": "Send code to verify",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Code"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Not verified.",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Verify Code"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Change Password",
+        "description": "Reset password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reset Password"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Not verified.",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "User Sign In",
+        "description": "Verify if user exist and password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Not verified.",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User Auth"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/data": {
+      "get": {
+        "tags": ["Users"],
+        "security": [{"bearerAuth": []}],
+        "summary": "Get User Data",
+        "description": "Verify if user exist and password",
+        "responses": {
+          "400": {
+            "description": "Not verified.",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Generic Response"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "applications/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User Auth"
+                }
+              }
+            }
           }
         }
       }
@@ -115,12 +266,12 @@
       "Generic Response": {
         "type": "object",
         "properties": {
-            "status": {
-                "type": "boolean"
-            },
-            "message": {
-                "type": "string"
-            }
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
         }
       },
       "Email": {
@@ -129,7 +280,76 @@
           "email": {
             "type": "string"
           }
+        },
+        "required": ["email"]
+      },
+      "Code": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        },
+        "required": ["code"]
+      },
+      "Verify Code": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "userToken": {
+            "type": "string"
+          }
         }
+      },
+      "Reset Password": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string"
+          },
+          "userToken": {
+            "type": "string"
+          }
+        },
+        "required": ["password", "userToken"]
+      },
+      "Login": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "required": ["password", "username"]
+      },
+      "User Auth": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "picture": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
