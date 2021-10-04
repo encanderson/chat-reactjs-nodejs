@@ -49,12 +49,12 @@ $grey900: #212121;
 //-----------------------|| DARK THEME VARIANTS ||-----------------------//
 
 // paper & background
-$backgroundDark: #262a2c; // level 3 input color
-$paperDark: #082032; // level 4 background
+$backgroundDark: #1a223f; // level 3
+$paperDark: #111936; // level 4
 
 // dark 800 & 900
-$darkLevel1: #334756; // level 1
-$darkLevel2: #2C394B; // level 2 surface
+$darkLevel1: #29314f; // level 1
+$darkLevel2: #212946; // level 2
 
 // secondary dark
 $APurple100: #b388ff;
@@ -138,4 +138,11 @@ $textDarkSecondary: #8492c4;
     APurple200: $APurple200;
     APurple400: $APurple400;
     APurple700: $APurple700;
+}
+
+::-webkit-scrollbar{
+    width: 1px,
+}
+::-webkit-scrollbar-track{
+    background: $paperDark;
 }

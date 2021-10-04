@@ -70,7 +70,7 @@ const JWTCodeVerification = () => {
       dispatch({
         type: SNACKBAR_OPEN,
         open: true,
-        message: response.message,
+        message: "Digite uma nova senha",
         variant: "alert",
         anchorOrigin: { vertical: "top", horizontal: "center" },
         alertSeverity: "success",
