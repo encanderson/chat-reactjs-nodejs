@@ -3,7 +3,7 @@ import React from "react";
 
 // material-ui
 import { makeStyles, useTheme } from "@material-ui/styles";
-import { Button, Grid, Tooltip, Typography } from "@material-ui/core";
+import { Avatar, Button, Grid, Tooltip, Typography } from "@material-ui/core";
 
 // project imports
 import { gridSpacing } from "@src/store/constant";
@@ -46,13 +46,25 @@ const Users = ({ item }) => {
           >
             <Grid item sm zeroMinWidth>
               <Grid container spacing={0}>
-                <Grid item xs={12}>
-                  <Typography variant="h4" component="div">
-                    {item.name}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="caption">{item.username}</Typography>
+                <Grid
+                  item
+                  xs={12}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <Grid>
+                    <Avatar
+                      src={`data:image/png;base64,${item.picture}`}
+                      className={classes.profileAvatar}
+                      aria-haspopup="true"
+                      color="inherit"
+                    />
+                  </Grid>
+                  <Grid style={{ marginLeft: 10 }}>
+                    <Typography variant="h4" component="div">
+                      {item.name}
+                    </Typography>
+                    <Typography variant="caption">{item.username}</Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>

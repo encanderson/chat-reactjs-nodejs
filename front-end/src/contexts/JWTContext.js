@@ -148,7 +148,7 @@ export const JWTProvider = ({ children }) => {
         const serviceToken = window.localStorage.getItem("serviceToken");
         if (serviceToken && verifyToken(serviceToken)) {
           setSession(serviceToken);
-          const response = await axios.get(createUrlApi("/user/data"));
+          const response = await axios.get(createUrlApi("/users/data"));
           const user = response.data.data;
           dispatch({
             type: ACCOUNT_INITIALIZE,

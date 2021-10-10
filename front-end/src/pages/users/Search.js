@@ -1,13 +1,13 @@
 import React from "react";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Container, Grid, TextField } from "@material-ui/core";
 // import CheckIcon from "@material-ui/icons/Check";
 
 import { gridSpacing } from "@src/store/constant";
-// import { searchUsers } from "@src/api/chat";
-// import { SNACKBAR_OPEN } from "@src/store/actions";
+import { searchUsers } from "@src/api/users";
+import { SNACKBAR_OPEN } from "@src/store/actions";
 
 // assets
 import { IconSearch } from "@tabler/icons";
@@ -46,30 +46,25 @@ const useStyles = makeStyles((theme) => ({
 
 const SearchBar = ({ setContacts }) => {
   const classes = useStyles();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [search, setSearch] = React.useState("");
   const handleSearch = async () => {
-    console.log(search);
-    // const response = await searchUsers({
-    //   city: city,
-    //   search: search,
-    // });
-    // if (response.status) {
-    //   setContacts(response.data);
-    //   setCity(null);
-    // } else {
-    //   setContacts([]);
-    //   dispatch({
-    //     type: SNACKBAR_OPEN,
-    //     open: true,
-    //     message: response.message,
-    //     variant: "alert",
-    //     anchorOrigin: { vertical: "top", horizontal: "center" },
-    //     alertSeverity: "error",
-    //     close: true,
-    //   });
-    // }
+    const response = await searchUsers(search);
+    if (response.status) {
+      setContacts(response.data);
+    } else {
+      setContacts({});
+      dispatch({
+        type: SNACKBAR_OPEN,
+        open: true,
+        message: response.message,
+        variant: "alert",
+        anchorOrigin: { vertical: "top", horizontal: "center" },
+        alertSeverity: "error",
+        close: true,
+      });
+    }
   };
 
   return (

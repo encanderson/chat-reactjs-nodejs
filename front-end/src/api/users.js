@@ -3,6 +3,7 @@ import axios from "axios";
 import { createUrlApi } from "./baseUrl";
 
 export const searchUsers = async (search) => {
+  const token = localStorage.getItem("serviceToken");
   try {
     const response = await axios({
       method: "POST",
@@ -10,6 +11,7 @@ export const searchUsers = async (search) => {
       headers: {
         Accept: "application/json;",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       data: {
         search: search,

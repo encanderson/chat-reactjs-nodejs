@@ -21,12 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const SearchSection = () => {
   const classes = useStyles();
 
-  const [contacts, setContacts] = React.useState([
-    {
-      name: "Anderson",
-      username: "enganderson",
-    },
-  ]);
+  const [contacts, setContacts] = React.useState([]);
 
   let usersResult = "";
   if (contacts) {
